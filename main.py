@@ -20,6 +20,15 @@ def update_client(client_name, update_client_name):
         print("Client is not in the system")
 
 
+def delete_client(client_name):
+    global clients
+
+    if client_name in clients:
+        clients = clients.replace(client_name + ", ", "")
+    else:
+        print("Client is not in the system")
+
+
 def list_clients():
     global clients
 
@@ -61,7 +70,9 @@ if __name__ == "__main__":
         create_client(client_name)
         list_clients()
     elif command == "D":
-        pass
+        client_name = _get_client_name()
+        delete_client(client_name)
+        list_clients()
     elif command == "U":
         client_name = _get_client_name()
         update_client_name = input("What is the new name of the client? ")
