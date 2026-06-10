@@ -29,6 +29,16 @@ def delete_client(client_name):
         print("Client is not in the system")
 
 
+def search_client(client_name):
+    clients_list = clients.split(", ")
+
+    for client in clients_list:
+        if client != client_name:
+            continue
+        else:
+            return True
+
+
 def list_clients():
     global clients
 
@@ -48,6 +58,7 @@ def _print_welcome():
     print("[C]reate client")
     print("[U]pdate client")
     print("[D]elete client")
+    print("[S]earch client")
 
 
 def _get_client_name():
@@ -73,6 +84,14 @@ if __name__ == "__main__":
         client_name = _get_client_name()
         delete_client(client_name)
         list_clients()
+    elif command == "S":
+        client_name = _get_client_name()
+        found = search_client(client_name)
+
+        if found:
+            print("The client is in the system")
+        else:
+            print("The client: {0} is not in the system".format(client_name))
     elif command == "U":
         client_name = _get_client_name()
         update_client_name = input("What is the new name of the client? ")
