@@ -1,11 +1,24 @@
-clients = ["Pablo", "Ricardo"]
+clients = [
+    {
+        'name': "Pablo",
+        'company': "Google",
+        'email': "pablo@google.com",
+        'position': "Software Engineer"
+    },
+    {
+        'name': "Ricardo",
+        'company': "Facebook",
+        'email': "ricardo@facebook.com",
+        'position': "Data Engineer"
+    }
+]
 
 
-def create_client(client_name):
+def create_client(client):
     global clients
 
-    if client_name not in clients:
-        clients.append(client_name)
+    if client not in clients:
+        clients.append(client)
     else:
         print("Client already exists in the system")
 
@@ -40,8 +53,31 @@ def search_client(client_name):
 
 def list_clients():
     for idx, client in enumerate(clients):
-        print("{}: {}".format(idx, client))
+        print('{uid}, {name}, {company}, {email}, {position}'.format(
+            uid=idx,
+            name=client['name'],
+            company=client['company'],
+            email=client['email'],
+            position=client['position']
+        ))
 
+
+def _get_client_field(field_name):
+    field = None
+
+    while not field:
+        field = input("What is the client {}? ".format(field_name))
+    
+    return field
+
+
+def _get_client_name():
+    client_name = None
+
+    while not client_name:
+        client_name = input("What is the name of the client? ")
+
+    return client_name
 
 
 def _print_welcome():
@@ -55,15 +91,6 @@ def _print_welcome():
     print("[L]ist clients")
 
 
-def _get_client_name():
-    client_name = None
-
-    while not client_name:
-        client_name = input("What is the name of the client? ")
-
-    return client_name
-
-
 if __name__ == "__main__":
     _print_welcome()
 
@@ -71,8 +98,13 @@ if __name__ == "__main__":
     command = command.upper()
 
     if command == "C":
-        client_name = _get_client_name()
-        create_client(client_name)
+        client = {
+            'name': _get_client_field('name'),
+            'company': _get_client_field('company'),
+            'email': _get_client_field('email'),
+            'position': _get_client_field('position')
+        }
+        create_client(client)
         list_clients()
     elif command == "D":
         client_name = _get_client_name()
